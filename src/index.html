@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="stylesheet" type="text/css" href="./style.css">
+</head>
+<body>
+  <div id="App"></div>
+</body>
+<script type="text/jsx">
+import React, { setGlobal } from 'reactn';
+import ReactDOM from 'react-dom';
+import { Value } from 'slate';
+import {AppContainer} from 'react-hot-loader';
+const initialValue = {
+  document: {
+    nodes: [
+      {
+        object: 'block',
+        type: 'paragraph',
+        nodes: [
+          {
+            object: 'text',
+            text: 'A line of text in a paragraph.',
+          },
+        ],
+      },
+    ],
+  },
+};
+
+setGlobal({
+  value: Value.fromJSON(initialValue),
+  comments: [],
+  currentColor: {}, 
+  currentHighlight: {}, 
+  currentFont: {}, 
+  currentTextType: {},
+  currentFontSize: {}, 
+  currentHeading: "", 
+  currentFontSize: {},
+  boldApplied: false, 
+  italicsApplied: false, 
+  underlineApplied: false, 
+  strikeApplied: false, 
+  alignment: "left", 
+  spacing: 1, 
+  nodeType: ""
+});
+
+const render = () => {
+  const App = require('./app').default;
+  ReactDOM.render(<AppContainer><App /></AppContainer>, document.getElementById('App'));
+}
+
+render();
+if (module.hot) {
+  module.hot.accept(render);
+}
+</script>
+</html>

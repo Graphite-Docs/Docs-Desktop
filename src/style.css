@@ -1,0 +1,328 @@
+@font-face {
+    font-family: Helvetica-Bold;
+    src: local("Helvetica Neue Bold"),
+         local("HelveticaNeue-Bold"),
+         url(MgOpenModernaBold.ttf);
+        font-weight: bold;
+}
+
+@font-face {
+    font-family: Arial-Narrow;
+    src: url('./components/editor/assets/fonts/Arialn.ttf')
+}
+
+@font-face {
+    font-family: "Arial";
+    src: url('./components/editor/assets/fonts/ArialTh.ttf')
+}
+
+@font-face {
+    font-family: 'Times New Roman';
+    src: url('./components/editor/assets/fonts/times\ new\ roman.ttf')
+}
+
+@font-face {
+    font-family: 'Caviar Dreams';
+    src: url('./components/editor/assets/fonts/CaviarDreams.ttf')
+}
+
+@font-face {
+    font-family: 'Arizona';
+    src: url('./components/editor/assets/fonts/Arizonia-Regular.ttf')
+}
+
+@font-face {
+    font-family: 'Lato';
+    src: url('./components/editor/assets/fonts/Lato-Regular.ttf')
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('./components/editor/assets/fonts/Montserrat-Regular.otf')
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: url('./components/editor/assets/fonts/OpenSans-Regular.ttf')
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    src: url('./components/editor/assets/fonts/PlayfairDisplay-Regular.otf')
+}
+
+@font-face {
+    font-family: 'Raleway';
+    src: url('./components/editor/assets/fonts/Raleway-Regular.ttf')
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('./components/editor/assets/fonts/Roboto-Regular.ttf')
+}
+
+@font-face {
+    font-family: 'Source Sans Pro';
+    src: url('./components/editor/assets/fonts/SourceSansPro-Regular.otf')
+}
+
+body {
+    overflow: auto!important;
+}
+
+#editor-section {
+    line-height: 1;
+}
+
+.center {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+}
+
+.left {
+    text-align: left;
+}
+
+.justify {
+    text-align: justify;
+}
+
+.main-editor {
+    max-width: 80%;
+    margin: auto;
+    padding: 25px;
+    overflow-y: scroll;
+}
+
+.toolbar ul, .image-block .image-position, .image-block .image-size {
+    list-style: none;
+}
+
+.toolbar ul li {
+    display: inline;
+    margin-left: 8px;
+    margin-right: 8px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.toolbar ul li:hover {
+    background: #eee;
+    padding: 5px;
+}
+
+.toolbar ul li img {
+    height: 15px;
+}
+
+.toolbar ul li select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+    background: transparent;
+    border: none;
+    font-size: 12px;
+    position: relative;
+    top: -3px;
+}
+
+.toolbar ul li span {
+    margin-left: 5px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+.dropdown-content {
+    display: block;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+    margin-left: -150px!important;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-selection {
+    font-size: 14px;
+    position: relative;
+    top: -3px;
+}
+
+.dropdown-content div {
+    padding: 3px;
+}
+
+.dropdown-content div:hover {
+    background: #eee;
+}
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 90%;
+    margin: auto
+}
+
+.flex-container > div {
+    background-color: #f1f1f1;
+    width: 10px;
+    height: 10px;
+    margin: 3px;
+    text-align: center;
+    line-height: 7.5px;
+    font-size: 6px;
+}
+
+.dropdown-content .flex-container:hover {
+    background: transparent;
+}
+
+.dropdown-content .flex-container div:hover {
+    border: #eee solid 0.5px!important;
+}
+
+.color-box {
+    height: 18px;
+    width: 18px;
+}
+
+.doc-image {
+    max-width: 100%;
+    margin: auto;
+    margin-bottom: -55px;
+}
+
+.image-block {
+    margin: 7px;
+}
+
+.image-block:hover {
+    cursor: pointer;
+}
+
+.img-centered {
+    max-width: 50%;
+    margin: auto;
+}
+
+.image-block div ul {
+    text-align: center;
+}
+
+.image-menu {
+    background: #fff;
+    padding: 3px;
+    opacity: 0.8;
+    position: relative;
+}
+
+.image-position li, .image-size li {
+    display: inline;
+    margin-left: 8px;
+    margin-right: 8px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.image-position li img {
+    height: 15px;
+    margin: auto;
+}
+
+.dimmer {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background: #282828;
+    opacity: 0.5;
+}
+
+.modal {
+    position: fixed;
+    top: 35%;
+    left: 35%;
+    background: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 999;
+    width: 300px;
+}
+
+#link-modal input {
+    padding: 10px;
+    border-radius: 3px;
+    width: 85%;
+    margin-left: 4%;
+    margin-right: 4%;
+    border: 0.5px #eee solid;
+}
+
+#comment-modal textarea {
+    padding: 10px;
+    border-radius: 5px;
+    width: 90%;
+    font-size: 12px;
+    border: 0.5px #eee solid;
+}
+
+.comment-save {
+    border: none;
+    padding: 5px;
+    color: #fff;
+    background: rgb(26, 115, 232);
+    border-radius: 3px;
+    margin-top: 3px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.comment-cancel {
+    border: none;
+    padding: 5px;
+    color: #000;
+    background: #eee;
+    border-radius: 3px;
+    margin-top: 3px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.comment-save:hover {
+    background: rgb(76, 148, 241);
+}
+
+.comment-cancel:hover {
+    background: #e0e0e0;
+}
+
+.mark span span {
+    margin-bottom: 15px;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+abbr[title] {
+    border-bottom: none !important;
+    cursor: inherit !important;
+    text-decoration: none !important;
+}
