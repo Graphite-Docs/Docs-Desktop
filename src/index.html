@@ -31,6 +31,7 @@ const initialValue = {
 
 setGlobal({
   value: Value.fromJSON(initialValue),
+  document: {},
   comments: [],
   currentColor: {}, 
   currentHighlight: {}, 
@@ -45,7 +46,13 @@ setGlobal({
   strikeApplied: false, 
   alignment: "left", 
   spacing: 1, 
-  nodeType: ""
+  nodeType: "", 
+  marginTop: 1,
+  marginBottom: 1,
+  marginLeft: 1,
+  marginRight: 1, 
+  orientation: "portrait", 
+  tableSize: "1x1"
 });
 
 const render = () => {

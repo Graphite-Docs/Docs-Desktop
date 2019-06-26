@@ -33,7 +33,7 @@ export function onChange(editor) {
   const fontSizeApplied = value.marks.filter(mark => mark.type === "font-size").size === 1 ? true : false;
   const fontFamilyApplied = value.marks.filter(mark => mark.type === "font-family").size === 1 ? true : false;
   const blockApplied = value.blocks.filter(block => block.toJSON()).size === 1 ? true : false;
-  console.log(value.blocks.map(block => {console.log(block.toJSON())}))
+  
   value.blocks.map(block => {
     if(block.toJSON().type === "image") {
       //Do nothing here
@@ -169,6 +169,9 @@ export function onKeyDown(event, editor, next) {
         } else if(getGlobal().nodeType === "ordered") {
           editor.setBlocks('list-item').wrapBlock('ordered-list').focus();
         }
+      } else {
+        event.preventDefault();
+        editor.insertText('     ').focus();
       }
     }
 
@@ -192,6 +195,10 @@ export function onKeyDown(event, editor, next) {
         editor.unwrapBlock('unordered-list');
         editor.setBlocks(DEFAULT_NODE);
         editor.setBlocks(DEFAULT_NODE);
+      } else if(hasBlock('block-quote') && enterPress > 1) {
+        enterPress = 0;
+        //editor.unwrapBlock();
+        editor.setBlocks(DEFAULT_NODE).focus();
       }
     } else {
       enterPress = 0;
@@ -265,6 +272,8 @@ export function clickBlock(editor, type) {
           })
       editor.unwrapBlock();
       editor.setBlocks(DEFAULT_NODE);
+    } else if(type === "block-quote") {
+        editor.setBlocks(hasBlock('block-quote') ? DEFAULT_NODE : 'block-quote').moveToEndOfBlock().focus();
     } else if(type === "h1") {
         editor.setBlocks(hasBlock('h1') ? DEFAULT_NODE : 'h1');
     } else if(type === 'h2') {
@@ -277,6 +286,8 @@ export function clickBlock(editor, type) {
         editor.setBlocks(hasBlock('h5') ? DEFAULT_NODE : 'h5');
     } else if(type === 'p') {
         editor.setBlocks(hasBlock('p') ? DEFAULT_NODE : 'p');
+    } else if(type === "table") {
+        editor.insertBlock('table').insertBlock('table-row').insertBlock('table-cell');
     } else if(type.includes('font')) {
         const fontName = type.split(':')[1];
         console.log(hasMark('font-family'));

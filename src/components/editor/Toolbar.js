@@ -119,6 +119,9 @@ export default class Toolbar extends React.Component {
       if(highlightListOpen) {
         document.getElementById('highlight-drop').style.display = "none";
       }
+      if(document.getElementById('table-drop')) {
+        document.getElementById('table-drop').style.display = "none";
+      }
   }
 
   handleHeading = (event, type) => {
@@ -170,7 +173,7 @@ export default class Toolbar extends React.Component {
     const { currentColor, currentHighlight, currentFont, currentHeading, currentFontSize } = this.global;
     const { boldApplied, italicsApplied, underlineApplied, strikeApplied, alignment } = this.global;
     return (
-    <div onClick={this.handleOtherClick}>
+    <div className="no-print" onClick={this.handleOtherClick}>
         <div className="toolbar">
             <ul>
                 <li onClick={(event) => this.props.onClickBlock(event, 'undo')}><img src={`${__dirname}/assets/icons/undo.svg`} alt="undo icon" /></li>
@@ -301,7 +304,7 @@ export default class Toolbar extends React.Component {
         <div className="modal" style={{display: "none"}} id='comment-modal'>
             <div>
                 <textarea id="comment-input" placeholder="Your comment"></textarea>
-                <button onClick={this.handleComment} className="comment-save">Add Comment</button><button onClick={this.closeModals} className="comment-cancel">Cancel</button>
+                <button onClick={this.handleComment} className="save-button">Add Comment</button><button onClick={this.closeModals} className="cancel-button">Cancel</button>
             </div>
         </div>
     </div>

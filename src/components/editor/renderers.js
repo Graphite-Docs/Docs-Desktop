@@ -88,8 +88,25 @@ export function renderBlock(props, editor, next) {
             
           )
       }
+      case 'table': {
+        return(
+          <table {...attributes}>
+            {children}
+          </table>
+        )
+      }
+      case 'table_row':
+        return (
+          <tr {...attributes}>{children}</tr>
+        )
+      case 'table_cell': 
+          return(
+            <td {...attributes}>{children}</td>
+          )
       case 'alignment-div': 
         return <div className={node.data.get('class') ? node.data.get('class') : ""} {...attributes}>{children}</div>
+      case 'tab': 
+        return <pre {...attributes}>{children}</pre>
       default:
         return next()
     }
