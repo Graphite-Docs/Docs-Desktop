@@ -1,5 +1,7 @@
 import React, { setGlobal } from 'reactn';
 import { imageAlign, imageSize } from './imagehandler';
+import { handleShapeClick } from './shapes';
+import uuid from 'uuid/v4';
 
 export function renderMark(props, editor, next) {
     switch (props.mark.type) {
@@ -40,6 +42,7 @@ export function renderMark(props, editor, next) {
 
 export function renderBlock(props, editor, next) {
     const { attributes, children, node } = props;
+    const thisId = uuid();
     switch (node.type) {
       case 'block-quote':
         return <blockquote className={node.data.get('class') ? node.data.get('class') : ""} {...attributes}>{children}</blockquote>
@@ -107,6 +110,43 @@ export function renderBlock(props, editor, next) {
         return <div className={node.data.get('class') ? node.data.get('class') : ""} {...attributes}>{children}</div>
       case 'tab': 
         return <pre {...attributes}>{children}</pre>
+      case 'circle':
+        return (
+          <svg {...attributes} className="svg-shapes" id={thisId} draggable="true" onClick={() => handleShapeClick(thisId)} height="100" width="100">
+            <circle cx="50" cy="50" r="40" stroke="black" strokeWidth="3" fill="white" />
+          </svg>
+        )  
+      case 'rectangle':
+          return (
+              <svg {...attributes} className="svg-shapes" id={thisId} draggable="true" onClick={() => handleShapeClick(thisId)} width="400" height="110">
+                <rect width="300" height="100" stroke="black" strokeWidth="3" fill="white" />
+              </svg> 
+          )  
+      case 'square':
+          return (
+                <svg {...attributes} viewBox="0 0 300 300" className="svg-shapes" id={thisId} draggable="true" onClick={() => handleShapeClick(thisId)} width="400" height="400">
+                    <rect width="300" height="300" stroke="black" strokeWidth="3" fill="white" />
+                </svg> 
+          )
+          
+      case 'horizontal-line':
+          return (
+            <svg {...attributes} className="svg-shapes" id={thisId} draggable="true" onClick={() => handleShapeClick(thisId)} height="100" width="500">
+              <line x1="0" y1="50" x2="500" y2="50"  stroke="black" strokeWidth="3" fill="black"/>
+            </svg>
+          )
+
+      case 'vertical-line':
+        let id = uuid();
+        return (
+          <svg {...attributes} className="svg-shapes" id={thisId} draggable="true" onClick={() => handleShapeClick(thisId)} height="500" width="3">
+            <rect width="3" height="500" stroke="black" strokeWidth="3" fill="white" />
+          </svg>
+        )
+      case "hr": 
+          return (
+            <hr className="hr" {...attributes} />
+          )
       default:
         return next()
     }

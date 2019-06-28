@@ -21,9 +21,9 @@ let enterPress = 0;
 export function onChange(editor) {
   const { value } = editor;
   setGlobal({ 
-    value  
+    value 
   });
-  
+
   const boldApplied = value.marks.filter(mark => mark.type === "bold").size === 1 ? true : false;
   const italicsApplied = value.marks.filter(mark => mark.type === "italic").size === 1 ? true : false;
   const underlineApplied = value.marks.filter(mark => mark.type === "underline").size === 1 ? true : false;
@@ -288,9 +288,21 @@ export function clickBlock(editor, type) {
         editor.setBlocks(hasBlock('p') ? DEFAULT_NODE : 'p');
     } else if(type === "table") {
         editor.insertBlock('table').insertBlock('table-row').insertBlock('table-cell');
+    } else if(type.includes('shape')) {
+        const shape = type.split(':')[1];
+        editor.insertBlock(shape);
+    } else if(type === "hr") {
+        editor.insertBlock('hr');
+    } else if(type === "header") {
+        document.getElementById('header-wrapper').style.display = "block";
+        let pages = document.getElementsByClassName('page-view');
+        let page = pages[0];
+        let style = window.getComputedStyle(page);
+        let width = style.width;
+
+        document.getElementById('header-wrapper').style.width = width;
     } else if(type.includes('font')) {
         const fontName = type.split(':')[1];
-        console.log(hasMark('font-family'));
         if(hasMark('font-family')) {
             if (value.selection.isExpanded) {
                 value.marks

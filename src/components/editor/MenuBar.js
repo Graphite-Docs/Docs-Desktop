@@ -35,6 +35,10 @@ export default class MenuBar extends React.Component {
       if(document.getElementById('table-drop')) {
         document.getElementById('table-drop').style.display = "none";
       }
+      if(document.getElementById('shape-menu')) {
+        document.getElementById('shape-menu').style.display = "none";
+      }
+
   }
 
   triggerFilePicker = (event) => {
@@ -44,6 +48,11 @@ export default class MenuBar extends React.Component {
   handleTableModal = () => {
      document.getElementById('insert-drop').style.display = "none";
      document.getElementById('table-drop').style.display = "inline-block";
+  }
+
+  handleShapeList = () => {
+      document.getElementById('insert-drop').style.display = "none";
+      document.getElementById('shape-menu').style.display = "block";
   }
 
   render() {
@@ -88,10 +97,10 @@ export default class MenuBar extends React.Component {
                                 <input onChange={this.props.onImageClick} style={{display: "none"}} type="file" id="file-input-menu" accept=".png, .jpg, .jpeg, .gif" />
                             </li>
                             <li onClick={this.handleTableModal}>Table</li>
-                            <li>Shape</li>
-                            <li>Horizontal Line</li>
+                            {/*<li onClick={this.handleShapeList}>Shape</li>*/}
+                            <li onClick={(e) => this.props.onClickBlock(e,'hr')}>Horizontal Line</li>
                             <li className="divider"></li>
-                            <li>Header</li>
+                            <li onClick={(e) => this.props.onClickBlock(e, 'header')}>Header</li>
                             <li>Footer</li>
                             <li>Page Numbers</li>
                             <li>Table of Contents</li>

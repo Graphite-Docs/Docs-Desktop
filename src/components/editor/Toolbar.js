@@ -122,6 +122,10 @@ export default class Toolbar extends React.Component {
       if(document.getElementById('table-drop')) {
         document.getElementById('table-drop').style.display = "none";
       }
+
+      if(document.getElementById('shape-menu')) {
+        document.getElementById('shape-menu').style.display = "none";
+      }
   }
 
   handleHeading = (event, type) => {
