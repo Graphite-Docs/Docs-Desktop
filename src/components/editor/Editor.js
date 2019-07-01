@@ -125,9 +125,15 @@ handleHeaderClick = (e) => {
   document.getElementById('header-controls').style.display = "block";
 }
 
+handleFooterClick = (e) => {
+  e.preventDefault();
+  document.getElementById('footer-controls').style.display = "block";
+}
+
 handleEditorFocus = (e) => {
   e.preventDefault();
   document.getElementById('header-controls').style.display = "none";
+  document.getElementById('footer-controls').style.display = "none";
 }
 
 style = (type) => {
@@ -149,14 +155,6 @@ style = (type) => {
   render() {
     const { value } = this.global;
     const { editor } = this;
-
-    //Checking to see if a header exist and if the user is focused on it.
-    if(document.getElementById('header-wrapper')){
-      document.getElementById('header').addEventListener('click', () => {
-        
-      })
-    }
-
     //Checking to see if the editor exists and if there is a table and if the user has clicked into the table
     if(editor) {
       if(editor.isSelectionInTable()) {
@@ -216,6 +214,7 @@ style = (type) => {
             </div>
               </div>
             </div>
+
             <Editor 
                 onClick={this.handleEditorFocus}
                 className="main-editor" 
@@ -235,6 +234,28 @@ style = (type) => {
                 autoFocus
                 ref={this.ref}
             />
+
+            <div onClick={this.handleFooterClick} style={{display: "none"}} id="footer-wrapper">
+              <div suppressContentEditableWarning={true} contentEditable={true} id="footer">Footer</div>
+              <div style={{display: "none"}} id="footer-controls">
+              <div className="toolbar">
+                <ul>
+                    <li onClick={() => this.style('bold')}><img src={`${__dirname}/assets/icons/bold.svg`} alt="bold icon" /></li>
+                    <li onClick={() => this.style('italic')}><img src={`${__dirname}/assets/icons/italic.svg`} alt="italic icon" /></li>
+                    <li onClick={() => this.style('underline')}><img src={`${__dirname}/assets/icons/underline.svg`} alt="underline icon" /></li>
+                    <li onClick={() => this.style('left')}>
+                        <img src={`${__dirname}/assets/icons/align-left.svg`} alt="align left icon" />
+                    </li>
+                    <li onClick={() => this.style('center')}>
+                        <img src={`${__dirname}/assets/icons/align-center.svg`} alt="align center icon" />
+                    </li>
+                    <li onClick={() => this.style('right')}>
+                        <img src={`${__dirname}/assets/icons/align-right.svg`} alt="align right icon" />
+                    </li>
+                </ul>
+            </div>
+              </div>
+            </div>
           </div>
         </div>
     </div>

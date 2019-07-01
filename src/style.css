@@ -90,7 +90,7 @@ body {
     /* height = 660 * 1.65 */
     background: #fff;
     width: 841.5px;
-    height: 1089px;
+    min-height: 1089px;
     margin: auto;
     margin-top: 110px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -226,6 +226,13 @@ body {
     display: flex;
     flex-wrap: wrap;
     max-width: 90%;
+    margin: auto
+}
+
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
     margin: auto
 }
 
@@ -400,13 +407,13 @@ blockquote {
     border-top: 2px #eee solid;
 }
 
-#page-settings {
+#page-settings, #word-modal {
     background: #fff;
     border-radius: 5px;
     padding: 10px;
 }
 
-#page-settings h2 {
+#page-settings h2, #word-modal h2 {
     float: right;
     margin-right: 10px;
     margin-bottom: 10px;
@@ -419,16 +426,16 @@ blockquote {
     text-align: center;
 }
 
-#page-settings h2:hover {
+#page-settings h2:hover, #word-modal h2 {
     background: #eee;
     border-radius: 100%;
 }
 
-#page-settings ul {
+#page-settings ul, #word-modal ul {
     list-style-type: none;
 }
 
-#page-settings ul li {
+#page-settings ul li, #word-modal ul li {
     margin: 5px;
 }
 
@@ -447,6 +454,16 @@ blockquote {
     padding: 5px;
     border: 0.5px solid #eee;
     margin-left: 5px;
+}
+
+#word-modal ul {
+    margin-left: -15px;
+}
+
+#word-modal ul li {
+    padding: 5px;
+    font-size: 12px;
+    width: 70%;
 }
 
 #table-drop {
@@ -557,6 +574,62 @@ table, th, td {
 #header:focus {
     outline: 0px solid transparent;
   }
+
+#footer-wrapper {
+    position: absolute;
+    height: 50px;
+}
+
+#footer {
+    height: 98%;
+    width: 98%;
+    margin: auto;
+    margin-top: 5px;
+}
+
+#footer:focus {
+    outline: 0px solid transparent;
+}
+
+.table-of-contents ul {
+    list-style: none;
+}
+
+.table-of-contents ul li {
+    padding: 10px;
+}
+
+#doc-outline, #comment-review-modal {
+    position: fixed;
+    left: 0;
+    top: 100px;
+    width: 20%;
+    height: 100vh;
+    background: #eee;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+#doc-outline div ul li {
+    cursor: pointer;
+    font-weight: 900;
+}
+
+#line-spacing {
+    width: 300px;
+    position: relative;
+}
+
+.single-space {
+    line-height: 1!important;
+}
+
+.double-space {
+    line-height: 2!important;
+}
+
+.one-point-five-space {
+    line-height: 1.5!important;
+}
 
   @media print
   {    

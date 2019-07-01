@@ -1,7 +1,11 @@
-import React, { setGlobal } from 'reactn';
+import React, { setGlobal, getGlobal } from 'reactn';
 import { imageAlign, imageSize } from './imagehandler';
 import { handleShapeClick } from './shapes';
 import uuid from 'uuid/v4';
+
+export function hanldeTOCNav(id) {
+  document.getElementById(id).scrollIntoView();
+}
 
 export function renderMark(props, editor, next) {
     switch (props.mark.type) {
@@ -43,7 +47,29 @@ export function renderMark(props, editor, next) {
 export function renderBlock(props, editor, next) {
     const { attributes, children, node } = props;
     const thisId = uuid();
+    const tableOfContents = getGlobal().tableOfContents;
     switch (node.type) {
+      // case 'page-view': 
+      //   return(
+      //     <div className="page-view" {...attributes}>
+      //       {children}
+      //     </div>
+      //   )
+      case 'table-of-contents':
+        return (
+          <div className="table-of-contents" {...attributes}>
+            <h3>Table of Contents</h3>
+            <ul>
+            {
+              tableOfContents.map(item => {
+                return(
+                  <li key={item.id}><a onClick={() => hanldeTOCNav(item.id)} href={`#${item.id}`}>{item.text}</a></li>
+                )
+              })
+            }
+            </ul>
+          </div>
+        )
       case 'block-quote':
         return <blockquote className={node.data.get('class') ? node.data.get('class') : ""} {...attributes}>{children}</blockquote>
       case 'unordered-list':
@@ -160,7 +186,6 @@ export function revealImageMenus(id) {
 
 export function renderInline(props, editor, next) {
   const { attributes, children, node } = props
-  console.log(node.type);
   switch (node.type) {
     case 'link': {
       const { data } = node
@@ -180,7 +205,7 @@ export function renderInline(props, editor, next) {
             <span style={{marginBottom:"15px"}} className="comment-text">{comment.comment}</span><br/><br/>
             <button className="comment-save" onClick={() => resolveComment(editor, node.key)}>Resolve</button><button className="comment-cancel" onClick={() => handleCloseCommentModal(comment)}>Close</button>
           </span>
-          <abbr title={comment} onClick={() => handleCommentModal(comment)}>{children}</abbr>
+          <abbr id={`comment:${comment.id}`} title={comment} onClick={() => handleCommentModal(comment)}>{children}</abbr>
         </mark>
       )
     }

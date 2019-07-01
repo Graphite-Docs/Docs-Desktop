@@ -1,11 +1,13 @@
-import { getGlobal } from 'reactn';
+import { getGlobal, setGlobal } from 'reactn';
 const uuid = require('uuid/v4');
 export function wrapComment(editor, comment) {
+    let allComments = getGlobal().allComments;
     editor.wrapInline({
       type: 'comment',
       data: { comment },
     });
     editor.moveToEnd()
+    setGlobal({ allComments: [...allComments, comment]});
 }
 
 export function unwrapComment(editor) {
@@ -21,7 +23,6 @@ export function hasComments() {
 
 export function onClickComment(event, editor) {
     event.preventDefault();
-    console.log("Working")
 
     const { value } = editor;
     

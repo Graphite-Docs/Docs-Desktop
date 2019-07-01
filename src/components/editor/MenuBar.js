@@ -1,6 +1,6 @@
 import React from 'reactn';
 import { exportAsWord, exportAsRTF, exportAsTXT, exportAsPDF } from '../helpers/exportHelpers';
-import { handlePageSettings } from '../helpers/settings';
+import { handlePageSettings, lineHeight } from '../helpers/settings';
 
 export default class MenuBar extends React.Component {
 
@@ -55,6 +55,17 @@ export default class MenuBar extends React.Component {
       document.getElementById('shape-menu').style.display = "block";
   }
 
+  handleWordModal = () => {
+      document.getElementById('tools-drop').style.display = "none";
+      document.getElementById('dimmer').style.display = 'block';
+      document.getElementById('word-modal').style.display = 'block';
+  }
+
+  commentModal = () => {
+    document.getElementById('tools-drop').style.display = "none";
+    document.getElementById('comment-review-modal').style.display = 'block';
+  }
+
   render() {
       const { menuSelection } = this.state;
     return (
@@ -101,9 +112,9 @@ export default class MenuBar extends React.Component {
                             <li onClick={(e) => this.props.onClickBlock(e,'hr')}>Horizontal Line</li>
                             <li className="divider"></li>
                             <li onClick={(e) => this.props.onClickBlock(e, 'header')}>Header</li>
-                            <li>Footer</li>
-                            <li>Page Numbers</li>
-                            <li>Table of Contents</li>
+                            {/*<li onClick={(e) => this.props.onClickBlock(e, 'footer')}>Footer</li>*/}
+                            {/*<li>Page Numbers</li>*/}
+                            <li onClick={(e) => this.props.onClickBlock(e, 'table-of-contents')}>Table of Contents</li>
                         </ul>
                     </div> : 
                     <div className="hide" />
@@ -114,8 +125,18 @@ export default class MenuBar extends React.Component {
                     menuSelection === "format" ? 
                     <div style={{display: "none"}} id="format-drop" className="dropdown menu-drops">
                         <ul className="dropdown-menu-content">
-                            <li>Heyo</li>
-                            <li>Boom</li>
+                            <li><span onClick={() => document.getElementById('line-spacing').style.display="inline-block"}>Line Spacing</span>
+                                <ul style={{display: "none"}} id="line-spacing">
+                                    <li onClick={() => lineHeight('single')}>Single</li>
+                                    <li onClick={() => lineHeight('1.50')}>1.50</li>
+                                    <li onClick={() => lineHeight('double')}>Double</li>
+                                </ul> 
+                            </li>
+                            <li onClick={handlePageSettings}>Page Settings</li>
+                            {/*<li onClick={(e) => this.props.onClickBlock(e, 'two-column')}>Two-Column Layout</li>*/}
+                            {/*<li onClick={(e) => this.props.onClickBlock(e, 'three-column')}>Three-Column Layout</li>*/}
+                            <li className="divider"></li>
+                            <li onClick={(e) => this.props.onClickBlock(event, 'clear-formatting')}>Clear Formatting</li>
                         </ul>
                     </div> : 
                     <div className="hide" />
@@ -126,8 +147,11 @@ export default class MenuBar extends React.Component {
                     menuSelection === "tools" ? 
                     <div style={{display: "none"}} id="tools-drop" className="dropdown menu-drops">
                         <ul className="dropdown-menu-content">
-                            <li>Heyo</li>
-                            <li>Boom</li>
+                            <li onClick={this.handleWordModal}>Word Count</li>
+                            {/*<li>Spell Check</li>*/}
+                            {/*<li>Grammar</li>*/}
+                            <li onClick={this.commentModal}>Review Comments</li>
+                            <li onClick={(e) => this.props.onClickBlock(e, 'doc-outline')}>Document Outline</li>
                         </ul>
                     </div> : 
                     <div className="hide" />

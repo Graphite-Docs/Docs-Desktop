@@ -15,7 +15,8 @@ const headerThree = isHotkey('shift+mod+3');
 const headerFour = isHotkey('shift+mod+4');
 const headerFive = isHotkey('shift+mod+5');
 const shiftTab = isHotkey('shift+tab');
-const DEFAULT_NODE = 'paragraph'
+const DEFAULT_NODE = 'paragraph';
+const STARTING_NODE = 'page-view';
 let enterPress = 0;
 
 export function onChange(editor) {
@@ -24,6 +25,23 @@ export function onChange(editor) {
     value 
   });
 
+  if(!hasBlock('page-view')) {
+    if(editor) {
+      //clickBlock(editor, 'page-view');
+    }
+  }
+
+  let editorSection = document.getElementById('editor-section');
+  let editorHeight = editorSection.offsetHeight;
+  let pageSections = document.getElementsByClassName('page-view')[0];
+  let pageHeight = parseInt(window.getComputedStyle(pageSections).height.split('px')[0], 10);
+  let pagesPrecise = (editorHeight/pageHeight);
+  let pages = Math.ceil(pagesPrecise)
+  setGlobal({ pages })
+  if(pagesPrecise > 1) {
+    //Increase pages
+  }
+  
   const boldApplied = value.marks.filter(mark => mark.type === "bold").size === 1 ? true : false;
   const italicsApplied = value.marks.filter(mark => mark.type === "italic").size === 1 ? true : false;
   const underlineApplied = value.marks.filter(mark => mark.type === "underline").size === 1 ? true : false;
@@ -272,6 +290,57 @@ export function clickBlock(editor, type) {
           })
       editor.unwrapBlock();
       editor.setBlocks(DEFAULT_NODE);
+    } else if(type === "table-of-contents") {
+      let tableLinks = [];
+      let tableOfContents = [];
+      let headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
+      for(const heading of headings) {
+        
+        if(heading.parentElement.attributes[0].nodeValue !== "page-settings" && heading.parentElement.attributes[0].nodeValue !== "doc-outline-inner" && heading.parentElement.attributes[0].nodeValue !== "comment-review-modal" && heading.parentElement.attributes[0].nodeValue !== "word-modal") {
+          tableLinks.push(heading);
+        } 
+        
+      }
+
+      for(const link of tableLinks) {
+        let text = link.innerText;
+        link.setAttribute('id', text.split(' ').join('_'));
+        
+        let newSection = {
+          id: link.getAttribute('id'), 
+          text: link.getAttribute('id').split('_').join(' ')
+        }
+        tableOfContents.push(newSection);
+      }
+      setGlobal({ tableOfContents })
+        editor.moveToStartOfDocument().focus().insertBlock('table-of-contents');
+    } else if(type === 'doc-outline') {
+      console.log("doc outline time")
+      let tableLinks = [];
+      let docOutline = [];
+      let headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
+      for(const heading of headings) {
+        
+        if(heading.parentElement.attributes[0].nodeValue !== "page-settings" && heading.parentElement.attributes[0].nodeValue !== "doc-outline-inner" && heading.parentElement.attributes[0].nodeValue !== "comment-review-modal" && heading.parentElement.attributes[0].nodeValue !== "word-modal") {
+          tableLinks.push(heading);
+        } 
+        
+      }
+
+      for(const link of tableLinks) {
+        let text = link.innerText;
+        link.setAttribute('id', text.split(' ').join('_'));
+        
+        let newSection = {
+          id: link.getAttribute('id'), 
+          text: link.getAttribute('id').split('_').join(' ')
+        }
+        docOutline.push(newSection);
+      }
+      setGlobal({ docOutline })
+      document.getElementById('doc-outline').style.display = "block";
+    } else if(type === "two-column") {
+      document.getElementById('page-view').classList.add('two-column')
     } else if(type === "block-quote") {
         editor.setBlocks(hasBlock('block-quote') ? DEFAULT_NODE : 'block-quote').moveToEndOfBlock().focus();
     } else if(type === "h1") {
@@ -301,6 +370,16 @@ export function clickBlock(editor, type) {
         let width = style.width;
 
         document.getElementById('header-wrapper').style.width = width;
+    } else if(type === "footer") {
+        document.getElementById('footer-wrapper').style.display = "block";
+        document.getElementById('footer-wrapper').style.position = "absolute";
+        let pages = document.getElementsByClassName('page-view');
+        let page = pages[0];
+        let style = window.getComputedStyle(page);
+        let width = style.width;
+        let height = style.height;
+        document.getElementById('footer-wrapper').style.width = width;
+        document.getElementById('footer-wrapper').style.top = `${parseInt(height.split('px')[0], 10) + 50}px`;
     } else if(type.includes('font')) {
         const fontName = type.split(':')[1];
         if(hasMark('font-family')) {

@@ -20,16 +20,60 @@ export async function savePageSettings() {
     for(const page of pages) {
         if(thisDoc.orientation === 'landscape') {
             page.style.width = "1089px";
-            page.style.height = "841.5px";
+            page.style.minHeight = "841.5px";
         } else {
             page.style.width = "841.5px";
-            page.style.height = "1089px";
+            page.style.minHeight = "1089px";
         }
     }
 }
 
 export async function handlePageSettings() {
-    document.getElementById('file-drop').style.display = "none";
+    document.getElementById('file-drop') ? document.getElementById('file-drop').style.display = "none" : document.getElementById('format-drop') ? document.getElementById('format-drop').style.display = "none" : null;
     document.getElementById('page-settings').style.display = "block";
     document.getElementById('dimmer').style.display = "block";
-  }
+}
+
+export function lineHeight(spacing) {
+    let writingSpace = document.getElementById('editor-section');
+    let document = getGlobal().document;
+    let lineHeight = document.lineHeight;
+    lineHeight = spacing;
+    
+    if(spacing === 'single') {
+            if(writingSpace.classList.contains('single-space')) {
+                writingSpace.classList.remove('single-space')
+            }
+            if(writingSpace.classList.contains('one-point-five-space')) {
+                writingSpace.classList.remove('one-point-five-space')
+            }
+            if(writingSpace.classList.contains('double-space')) {
+                writingSpace.classList.remove('double-space')
+            }
+            writingSpace.classList.add('single-space');
+    } else if(spacing === "1.50") {
+        if(writingSpace.classList.contains('single-space')) {
+            writingSpace.classList.remove('single-space')
+        }
+        if(writingSpace.classList.contains('one-point-five-space')) {
+            writingSpace.classList.remove('one-point-five-space')
+        }
+        if(writingSpace.classList.contains('double-space')) {
+            writingSpace.classList.remove('double-space')
+        }
+        writingSpace.classList.add('one-point-five-space');
+    } else if(spacing === "double") {
+        if(writingSpace.classList.contains('single-space')) {
+            writingSpace.classList.remove('single-space')
+        }
+        if(writingSpace.classList.contains('one-point-five-space')) {
+            writingSpace.classList.remove('one-point-five-space')
+        }
+        if(writingSpace.classList.contains('double-space')) {
+            writingSpace.classList.remove('double-space')
+        }
+        writingSpace.classList.add('double-space');
+    }
+    document.getElementById('line-spacing').style.display = "none";
+    setGlobal({ document });
+}
