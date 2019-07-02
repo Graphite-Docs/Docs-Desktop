@@ -1,5 +1,6 @@
 import { setGlobal, getGlobal } from 'reactn';
 import isHotkey from 'is-hotkey'
+import uuid from 'uuid/v4';
 
 const saveKey = isHotkey('mod+s');
 const boldKey = isHotkey('mod+b');
@@ -58,7 +59,7 @@ export function onChange(editor) {
     } else {
       const images = document.getElementsByClassName('image-block');
       for (const image of images) {
-          console.log(image);
+         
           image.style.border = "none";
           image.style.padding = "0px";
       }
@@ -254,7 +255,7 @@ export function onKeyDown(event, editor, next) {
         editor.setBlocks(hasBlock('h3') ? DEFAULT_NODE : 'h3');
     } else if(headerFour(event)) {
         event.preventDefault();
-        console.log("heyo")
+
         editor.setBlocks(hasBlock('h4') ? DEFAULT_NODE : 'h4');
     } else if(headerFive(event)) {
         event.preventDefault();
@@ -280,7 +281,7 @@ export function clickBlock(editor, type) {
       value.marks
           .filter(mark => mark.type !== 3)
           .forEach(mark => {
-            console.log(mark.toJSON())
+          
             let type = mark.toJSON().type;
             if(type === 'highlight-color' || type === "font-color" || type === "font-size" || type === "font-family") {
               editor.removeMark(mark);
@@ -315,7 +316,7 @@ export function clickBlock(editor, type) {
       setGlobal({ tableOfContents })
         editor.moveToStartOfDocument().focus().insertBlock('table-of-contents');
     } else if(type === 'doc-outline') {
-      console.log("doc outline time")
+
       let tableLinks = [];
       let docOutline = [];
       let headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
@@ -412,6 +413,7 @@ export function clickBlock(editor, type) {
         const fontSize = type.split(':')[1];
         if(hasMark('font-size')) {
             if (value.selection.isExpanded) {
+                let id = uuid();
                 value.marks
                   .filter(mark => mark.type === "font-size")
                   .forEach(mark => {
@@ -421,7 +423,8 @@ export function clickBlock(editor, type) {
                       .addMark({
                         type: "font-size",
                         data: { 
-                            size: fontSize 
+                            size: fontSize,
+                            id 
                         }
                       })
                       .focus();

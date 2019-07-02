@@ -20,10 +20,10 @@ export async function savePageSettings() {
     for(const page of pages) {
         if(thisDoc.orientation === 'landscape') {
             page.style.width = "1089px";
-            page.style.minHeight = "841.5px";
+            page.style.height = "841.5px";
         } else {
             page.style.width = "841.5px";
-            page.style.minHeight = "1089px";
+            page.style.height = "1089px";
         }
     }
 }
@@ -36,9 +36,7 @@ export async function handlePageSettings() {
 
 export function lineHeight(spacing) {
     let writingSpace = document.getElementById('editor-section');
-    let document = getGlobal().document;
-    let lineHeight = document.lineHeight;
-    lineHeight = spacing;
+    let doc = getGlobal().document;
     
     if(spacing === 'single') {
             if(writingSpace.classList.contains('single-space')) {
@@ -75,5 +73,5 @@ export function lineHeight(spacing) {
         writingSpace.classList.add('double-space');
     }
     document.getElementById('line-spacing').style.display = "none";
-    setGlobal({ document });
+    setGlobal({ document: doc });
 }

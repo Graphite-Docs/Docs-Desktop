@@ -8,6 +8,17 @@ export function hanldeTOCNav(id) {
 }
 
 export function renderMark(props, editor, next) {
+    // if(props.mark.type === "font-size") {
+    //   //do nothing
+    //   console.log("hey")
+    // } else {
+
+    //     const id = 'print-container';
+    //     const size = props.mark.data.get('size');
+    //     const style = document.createElement('style');
+    //     style.innerHTML = `@media print { #${id} { font-size: 12pt; } }`
+    //     document.head.appendChild(style);
+    // }
     switch (props.mark.type) {
       case 'bold':
         return <strong {...props.attributes}>{props.children}</strong>
@@ -28,6 +39,11 @@ export function renderMark(props, editor, next) {
             {props.children}
         </span>
       case 'font-size': 
+        const id = props.mark.data.get('id');
+        const size = props.mark.data.get('size');
+        const style = document.createElement('style');
+        style.innerHTML = `@media print { #${id} { font-size: ${size}pt; } }`
+        document.head.appendChild(style);
         return <span style={{ fontSize: `${props.mark.data.get('size')}px` }}>
             {props.children}
         </span>

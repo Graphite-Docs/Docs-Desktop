@@ -1,6 +1,7 @@
-import React from 'reactn';
+import React, { setGlobal } from 'reactn';
 import { exportAsWord, exportAsRTF, exportAsTXT, exportAsPDF } from '../helpers/exportHelpers';
 import { handlePageSettings, lineHeight } from '../helpers/settings';
+import Countable from 'countable';
 
 export default class MenuBar extends React.Component {
 
@@ -56,6 +57,13 @@ export default class MenuBar extends React.Component {
   }
 
   handleWordModal = () => {
+    if(document.getElementById('editor-section')) {
+        Countable.count(document.getElementById('editor-section'), (counter) => setGlobal({ words: counter.words, paragraphs: counter.paragraphs, sentences: counter.sentences, charactersNoSpaces: counter.characters, charactersSpaces: counter.all }), {
+            hardReturns: false,
+            stripTags: true,
+            ignore: []
+        })
+    }
       document.getElementById('tools-drop').style.display = "none";
       document.getElementById('dimmer').style.display = 'block';
       document.getElementById('word-modal').style.display = 'block';
@@ -66,8 +74,33 @@ export default class MenuBar extends React.Component {
     document.getElementById('comment-review-modal').style.display = 'block';
   }
 
+  handlePrint = () => {
+      const { marginRight, marginLeft, marginTop, marginBottom, orientation } = this.global;
+      var cssPagedMedia = (function () {
+            var style = document.createElement('style');
+            document.head.appendChild(style);
+            return function (rule) {
+                style.innerHTML = rule;
+            };
+        }());
+        
+        cssPagedMedia.size = function (size) {
+            cssPagedMedia(`@page {size: ' + ${size} + '; margin-top: ${marginTop}in; margin-bottom: ${marginBottom}in; margin-right: ${marginRight}in; margin-left: ${marginLeft}in;}`);
+        };
+        
+        cssPagedMedia.size(orientation);
+      
+    //   const style = document.createElement('style');
+    //   style.innerHTML = `@page {size: ${orientation}; margin-top: ${marginTop}in; margin-bottom: ${marginBottom}in; margin-right: ${marginRight}in; margin-left: ${marginLeft}in;}`;
+    //   document.head.appendChild(style);
+      let content = document.getElementById('editor-section').innerHTML;
+      let printContainer = document.getElementById('print-container')
+      printContainer.innerHTML = content;
+      window.print();
+  }
+
   render() {
-      const { menuSelection } = this.state;
+    const { menuSelection } = this.state;
     return (
     <div className="menu-bar no-print" >
         <ul>
@@ -81,7 +114,7 @@ export default class MenuBar extends React.Component {
                             <li onClick={exportAsTXT}>Export to TXT</li>
                             <li className="divider"></li>
                             <li onClick={handlePageSettings}>Page Settings</li>
-                            <li onClick={() => window.print()}>Print</li>
+                            <li onClick={this.handlePrint}>Print</li>
                         </ul>
                     </div> : 
                     <div className="hide" />

@@ -1,35 +1,13 @@
 import React from 'reactn'
-import Countable from 'countable';
 
 export default class WordModal extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            words: 0,
-            charactersNoSpaces: 0,
-            charactersSpaces: 0, 
-            paragraphs: 0, 
-            sentences: 0
-        }
-    }
-
-    componentDidMount() {
-        if(document.getElementById('editor-section')) {
-            Countable.count(document.getElementById('editor-section'), (counter) => this.setState({ words: counter.words, paragraphs: counter.paragraphs, sentences: counter.sentences, charactersNoSpaces: counter.characters, charactersSpaces: counter.all }), {
-                hardReturns: false,
-                stripTags: true,
-                ignore: []
-            })
-        }
-    }
 
     handleClose = () => {
         document.getElementById('dimmer').style.display = "none";
         document.getElementById('word-modal').style.display = "none";
     }
     render() {
-        const { words, charactersSpaces, charactersNoSpaces, paragraphs, sentences } = this.state;
-        const { pages } = this.global;
+        const { words, charactersSpaces, charactersNoSpaces, paragraphs, sentences, pages } = this.global;
         return( 
             <div style={{display:"none"}} id="word-modal" className="modal">
                 <h2 onClick={this.handleClose}>X</h2>
